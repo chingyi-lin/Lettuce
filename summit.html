@@ -17,12 +17,46 @@
       <!-- camera javascript -->
       <script type="text/javascript">
       $(document).ready(function() {
-
+        document.getElementById("inputImage").addEventListener('change', handleFileSelect, false);
         $("#image").change(function(){
             alert("file upload changed");
         });
 
       });
+      
+      
+      function handleFileSelect(evt) {
+        
+        var files = evt.target.files; // FileList object
+
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+
+          // Only process image files.
+          if (!f.type.match('image.*')) {
+            continue;
+          }
+
+          var reader = new FileReader();
+
+          // Closure to capture the file information.
+          reader.onload = (function(theFile) {
+            return function(e) {
+              // Render thumbnail.
+              document.querySelector("#sourceImage").src = e.target.result;
+              /*
+              var span = document.createElement('span');
+              span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                                '" title="', escape(theFile.name), '"/>'].join('');
+              document.getElementById('list').insertBefore(span, null);
+              */
+            };
+          })(f);
+
+          // Read in the image file as a data URL.
+          reader.readAsDataURL(f);
+        }
+      }
 
       function check(form, image) {
            //Check each field has a value
@@ -32,6 +66,9 @@
               return false;
           }
       }
+      
+
+      
 
       function processImage() {
         var subscriptionKey = "5bc4e1def11c4881b426d5e4031b1e79";
@@ -99,15 +136,15 @@
             <div class="file-field input-field">
               <div class="btn">
                 <span>I ATE IT</span>
-                <!--<input id="inputImage" type="file" accept="image/*;capture=camera">-->
-                <input type="file" accept="image/*">
+                <input id="inputImage" name="files[]"" type="file" accept="image/*;capture=camera">
+                <!--<input type="file" accept="image/*">-->
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">
               </div>
             </div>
           </form>
-          <img id="sourceImage" width="400" />
+          <img id="sourceImage" width="600" />
         </div>
         <div class="row center-align">
           <p id="responseTextArea" class="UIInput">123</p>
