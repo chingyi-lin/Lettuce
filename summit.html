@@ -45,8 +45,10 @@
             return function(e) {
               // Render thumbnail.
               document.querySelector("#sourceImage").src = e.target.result;
+              $("#responseTextArea").text("Analyzing...");
               //document.getElementById("responseTextArea").innerHTML = e.target.result;
               document.getElementById("welcometext").remove();
+              document.getElementById("uploadArea").remove();
               //processImage();
               /*
               var span = document.createElement('span');
@@ -88,8 +90,20 @@
             keyword = temp;
             break;
         }
-        var description = "Wow! It looks " + color + "! Did you eat a " + keyword +"?";
+        var description = "Wow! It looks " + color + "! Did you eat the " + keyword +"?";
         $("#responseTextArea").text(description);
+        //<a class="btn btn-floating red" href="#"><star</i></a>
+
+        var buttonY = document.createElement('a');
+        buttonY.innerHTML = "Yes";
+        buttonY.className = "waves-effect waves-light btn";
+        buttonY.href = "newsfeed";
+        var buttonN = document.createElement('a');
+        buttonN.innerHTML = "No";
+        buttonN.className = "waves-effect waves-light btn";
+        buttonN.href = "#";
+        document.getElementById("Yes").appendChild(buttonY);
+        document.getElementById("No").appendChild(buttonN);
       }
 
       function processImage(f) {
@@ -162,13 +176,16 @@
             <h5 class="blue-text text-darken-2 center">11 Hr 29 Min</h5>
             <h4 class="blue-text text-darken-2 center">Eat a purple fruit or vegatable!</h4>
           </div>
-          <div class="col s12" id="response">
-            <img id="sourceImage" width="400" />
+          <div class="col s12 center-align" id="response">
+            <br>
+            <img id="sourceImage" width="350" />
             <p id="responseTextArea" class="blue-text text-darken-2"></p>
+            <div class="col s6" id="Yes"></div>
+            <div class="col s6" id="No"></div>
           </div>
         </div>
-        <div class="row center-align">
-          <form id="uploadimage" class="col s12" method="post" action="" enctype="multipart/form-data"><!--processImage() after upload-->
+        <div class="row center-align" id="uploadArea">
+          <form id="uploadimage" class="col s12" method="post" enctype="multipart/form-data"><!--processImage() after upload-->
             <div class="file-field input-field">
               <div class="btn">
                 <span>I ATE IT</span>
