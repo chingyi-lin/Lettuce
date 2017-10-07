@@ -36,7 +36,8 @@
           if (!f.type.match('image.*')) {
             continue;
           }
-
+          //alert("call");
+          processImage(f);
           var reader = new FileReader();
 
           // Closure to capture the file information.
@@ -44,6 +45,9 @@
             return function(e) {
               // Render thumbnail.
               document.querySelector("#sourceImage").src = e.target.result;
+              //document.getElementById("responseTextArea").innerHTML = e.target.result;
+              document.getElementById("welcometext").remove();
+              //processImage();
               /*
               var span = document.createElement('span');
               span.innerHTML = ['<img class="thumb" src="', e.target.result,
@@ -55,6 +59,7 @@
 
           // Read in the image file as a data URL.
           reader.readAsDataURL(f);
+
         }
       }
 
@@ -67,43 +72,60 @@
           }
       }
       
+      function processResult(response) {
+        //var data = JSON.stringify(response);
+        //$("#responseTextArea").text(data);
+        var keyword = response['Predictions'][0]['Tag'];
+        var color = response['Predictions'][1]['Tag'];
+        var description = "Wow! It looks " + color + "! Did you eat a " + keyword +"?";
+        $("#responseTextArea").text(description);
+      }
 
-      
-
-      function processImage() {
-        var subscriptionKey = "5bc4e1def11c4881b426d5e4031b1e79";
-        var uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v1.0/analyze";
-
+      function processImage(f) {
+        //var subscriptionKey = "5bc4e1def11c4881b426d5e4031b1e79";
+        //var uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v1.0/analyze?Tags,Faces";
+        var subscriptionKey = "4d40491e027a4354b30aae9adccbe0a7";
+        var uriBase = "https://southcentralus.api.cognitive.microsoft.com/customvision/v1.0/Prediction/058a7fe7-0557-4c5e-a6e6-44595a8809d3/image?iterationId=e8ed3ffc-852c-4d31-a4d2-03f159991b67";
         // Request parameters.
-        var params = {
+        /*var params = {
             "visualFeatures": "Categories,Description,Color",
             "details": "",
             "language": "en",
-        };
+        };*/
+
+
 
         // Display the image.
-        var sourceImageUrl = document.getElementById("inputImage").value;
-        document.querySelector("#sourceImage").src = sourceImageUrl;
+        //var file = document.getElementById('inputImage').files[0];
+        var file = f;
+        //document.getElementById("sourceImage").src;
+        //alert(sourceImageUrl);
 
         // Perform the REST API call.
         $.ajax({
-            url: uriBase + "?" + $.param(params),
+            //url: uriBase + "?" + $.param(params),
 
+            url: uriBase,
             // Request headers.
             beforeSend: function(xhrObj){
-                xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+                xhrObj.setRequestHeader("Content-Type","application/octet-stream");     
+                //xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+                xhrObj.setRequestHeader("Prediction-Key", subscriptionKey);
             },
 
             type: "POST",
 
             // Request body.
-            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+            //data: '{"url": ' + '"' + sourceImageUrl + '"}',
+            data: file,
+            processData: false
         })
 
         .done(function(data) {
             // Show formatted JSON on webpage.
-            $("#responseTextArea").val(JSON.stringify(data, null, 2));
+            //alert("done");
+            //$("#responseTextArea").val(JSON.stringify(data, null, 2));
+            processResult(data);
         })
 
         .fail(function(jqXHR, textStatus, errorThrown) {
@@ -112,8 +134,8 @@
             errorString += (jqXHR.responseText === "") ? "" : jQuery.parseJSON(jqXHR.responseText).message;
             alert(errorString);
         });
-      };
-
+      }
+      
       </script>
       <!-- Content -->
       <nav>
@@ -122,16 +144,19 @@
         </div>
       </nav>
       <div class="container"> 
-        <div class="row">
-          <div class="col s12">
+        <div class="row center-align">
+          <div class="col s12" id="welcometext">
             <h3 class="blue-text text-darken-2 center">Sunday</h3>
             <h3 class="blue-text text-darken-2 center">Oct. 8 2017</h3>
             <h5 class="blue-text text-darken-2 center">11 Hr 29 Min</h5>
             <h4 class="blue-text text-darken-2 center">Eat a purple fruit or vegatable!</h4>
           </div>
+          <div class="col s12" id="response">
+            <img id="sourceImage" width="400" />
+            <p id="responseTextArea" class="blue-text text-darken-2"></p>
+          </div>
         </div>
         <div class="row center-align">
-
           <form id="uploadimage" class="col s12" method="post" action="" enctype="multipart/form-data"><!--processImage() after upload-->
             <div class="file-field input-field">
               <div class="btn">
@@ -144,11 +169,6 @@
               </div>
             </div>
           </form>
-          <img id="sourceImage" width="600" />
-        </div>
-        <div class="row center-align">
-          <p id="responseTextArea" class="UIInput">123</p>
-        </div>
         </div>
       </div>
     </body>
