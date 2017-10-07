@@ -77,6 +77,17 @@
         //$("#responseTextArea").text(data);
         var keyword = response['Predictions'][0]['Tag'];
         var color = response['Predictions'][1]['Tag'];
+        switch (color) {
+          case "red":
+            break;
+          case "green":
+            break;
+          default:
+            var temp = color;
+            color = keyword;
+            keyword = temp;
+            break;
+        }
         var description = "Wow! It looks " + color + "! Did you eat a " + keyword +"?";
         $("#responseTextArea").text(description);
       }
