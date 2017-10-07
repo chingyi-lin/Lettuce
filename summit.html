@@ -1,0 +1,145 @@
+ <!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <!-- camera javascript -->
+      <script type="text/javascript">
+      $(document).ready(function() {
+
+        $("#image").change(function(){
+            alert("file upload changed");
+        });
+
+      });
+
+      function check(form, image) {
+           //Check each field has a value
+          if (image.value == '' ) {
+              $('#modal5').openModal();
+              //alert('You must provide all the requested details. Please try     again');
+              return false;
+          }
+      }
+
+      function processImage() {
+        var subscriptionKey = "5bc4e1def11c4881b426d5e4031b1e79";
+        var uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v1.0/analyze";
+
+        // Request parameters.
+        var params = {
+            "visualFeatures": "Categories,Description,Color",
+            "details": "",
+            "language": "en",
+        };
+
+        // Display the image.
+        var sourceImageUrl = document.getElementById("inputImage").value;
+        document.querySelector("#sourceImage").src = sourceImageUrl;
+
+        // Perform the REST API call.
+        $.ajax({
+            url: uriBase + "?" + $.param(params),
+
+            // Request headers.
+            beforeSend: function(xhrObj){
+                xhrObj.setRequestHeader("Content-Type","application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            },
+
+            type: "POST",
+
+            // Request body.
+            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+        })
+
+        .done(function(data) {
+            // Show formatted JSON on webpage.
+            $("#responseTextArea").val(JSON.stringify(data, null, 2));
+        })
+
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            // Display error message.
+            var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+            errorString += (jqXHR.responseText === "") ? "" : jQuery.parseJSON(jqXHR.responseText).message;
+            alert(errorString);
+        });
+      };
+
+      </script>
+      <!-- Content -->
+      <nav>
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo center">Logo</a>
+        </div>
+      </nav>
+      <div class="container"> 
+        <div class="row">
+          <div class="col s12">
+            <h3 class="blue-text text-darken-2 center">Sunday</h3>
+            <h3 class="blue-text text-darken-2 center">Oct. 8 2017</h3>
+            <h5 class="blue-text text-darken-2 center">11 Hr 29 Min</h5>
+            <h4 class="blue-text text-darken-2 center">Eat a purple fruit or vegatable!</h4>
+          </div>
+        </div>
+        <div class="row center-align">
+
+          <form id="uploadimage" class="col s12" method="post" action="" enctype="multipart/form-data"><!--processImage() after upload-->
+            <div class="file-field input-field">
+              <div class="btn">
+                <span>I ATE IT</span>
+                <!--<input id="inputImage" type="file" accept="image/*;capture=camera">-->
+                <input type="file" accept="image/*">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+          </form>
+          <img id="sourceImage" width="400" />
+        </div>
+        <div class="row center-align">
+          <p id="responseTextArea" class="UIInput">123</p>
+        </div>
+        </div>
+      </div>
+    </body>
+
+    <footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col s3 center-align">
+                <a class="btn btn-floating red" href="#"><i class="material-icons center">star</i></a>
+                <p class="grey-text text-lighten-4 center">Challenge</p>
+                
+              </div>
+              <div class="col s3 center-align">
+                <a class="btn btn-floating red" href="#"><i class="material-icons center">rss_feed</i></a>
+                <p class="grey-text text-lighten-4 center">Newsfeed</p>
+                
+              </div>
+              <div class="col s3 center-align">
+                <a class="btn btn-floating red" href="#"><i class="material-icons center">group</i></a>
+                <p class="grey-text text-lighten-4 center">Friend</p>
+                
+              </div>
+              <div class="col s3 center-align">
+                <a class="btn btn-floating red" href="#"><i class="material-icons center">local_florist</i></a>
+                <p class="grey-text text-lighten-4 center">Achievement</p>
+                
+              </div>
+            </div>
+          </div>
+        </footer>
+  </html>
