@@ -14,9 +14,14 @@
       <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/azure-storage.common.js"/></script>
+      <script type="text/javascript" src="js/azure-storage.blob.min.js"/></script>
       <!-- camera javascript -->
       <script type="text/javascript">
       $(document).ready(function() {
+        $("#btnY").click(function() {
+        console.log("yes button clicked")
+         });
         document.getElementById("inputImage").addEventListener('change', handleFileSelect, false);
         $("#image").change(function(){
             alert("file upload changed");
@@ -28,7 +33,7 @@
       function handleFileSelect(evt) {
         
         var files = evt.target.files; // FileList object
-
+        
         // Loop through the FileList and render image files as thumbnails.
         for (var i = 0, f; f = files[i]; i++) {
 
@@ -38,15 +43,23 @@
           }
           //alert("call");
           processImage(f);
+          uploadImage(f);
+          
           var reader = new FileReader();
+
+          //var startByte = evt.target.getAttribute('data-startbyte');
+          //var endByte = evt.target.getAttribute('data-endbyte');
+          //alert(startByte, endByte);
+          //readBlob(startByte, endByte, f);
 
           // Closure to capture the file information.
           reader.onload = (function(theFile) {
             return function(e) {
+             
               // Render thumbnail.
+
               document.querySelector("#sourceImage").src = e.target.result;
               $("#responseTextArea").text("Analyzing...");
-              //document.getElementById("responseTextArea").innerHTML = e.target.result;
               document.getElementById("welcometext").remove();
               document.getElementById("uploadArea").remove();
               //processImage();
@@ -61,19 +74,59 @@
 
           // Read in the image file as a data URL.
           reader.readAsDataURL(f);
-
         }
       }
-
-      function check(form, image) {
-           //Check each field has a value
-          if (image.value == '' ) {
-              $('#modal5').openModal();
-              //alert('You must provide all the requested details. Please try     again');
-              return false;
+      function uploadImage(file) {
+        //alert("uploading");
+        //alert(file.size);
+        //var file = document.getElementById('inputImage').files[0];
+        var fileName = "sampleUser";
+        var blobUri = 'https://lettuce.blob.core.windows.net/';
+        //var blobService = AzureStorage.createBlobServiceWithSas(blobUri, 'SAS_TOKEN');
+        //var blobService = AzureStorage.createBlobServiceAnonymous(blobUri);
+        
+        var sastoken = '?sv=2017-04-17&ss=bfqt&srt=sco&sp=rwdlacup&se=2017-10-09T03:13:13Z&st=2017-10-07T19:13:13Z&spr=https,http&sig=50ImZNP%2BtcfKM0YA9xicln%2BSnULQ1yMI3dvLvOAWqBQ%3D'
+        var blobUri = 'https://lettuce.blob.core.windows.net/';
+        var blobService = AzureStorage.createBlobServiceWithSas(blobUri, sastoken);
+        var customBlockSize = file.size > 1024 * 1024 * 32 ? 1024 * 1024 * 4 : 1024 * 512;
+        blobService.singleBlobPutThresholdInBytes = customBlockSize;
+        var finishedOrError = false;
+        var speedSummary = blobService.createBlockBlobFromBrowserFile('usrimg', file.name, file, {blockSize : customBlockSize}, function(error, result, response) {
+          finishedOrError = true;
+          if (error) {
+            // Upload blob failed
+            //alert("error");
+          } else {
+            // Upload successfully
+            //alert("success!");
           }
+        });
+        /*
+        var speedSummary = blobService.createBlockBlobFromText('usrimg', 'what', file, 
+                      {
+                         contentType: 'image/jpeg',
+                         contentEncoding: 'base64'
+                      }, 
+                      function(error, result, response) {
+                           if (error) {
+                               alert("error");
+                           } else {
+                           alert("success!");
+                         }
+                      });
+        refreshProgress();
+
+      */
       }
-      
+      function refreshProgress() {
+      setTimeout(function() {
+          if (!finishedOrError) {
+              var process = speedSummary.getCompletePercent();
+              displayProcess(process);
+              refreshProgress();
+          }
+        }, 200);
+      }
       function processResult(response) {
         //var data = JSON.stringify(response);
         //$("#responseTextArea").text(data);
@@ -97,7 +150,8 @@
         var buttonY = document.createElement('a');
         buttonY.innerHTML = "Yes";
         buttonY.className = "waves-effect waves-light btn";
-        buttonY.href = "newsfeed";
+        buttonY.href = "#";
+        buttonY.id = "btnY";
         var buttonN = document.createElement('a');
         buttonN.innerHTML = "No";
         buttonN.className = "waves-effect waves-light btn";
@@ -189,6 +243,7 @@
             <div class="file-field input-field">
               <div class="btn">
                 <span>I ATE IT</span>
+
                 <input id="inputImage" name="files[]"" type="file" accept="image/*;capture=camera">
                 <!--<input type="file" accept="image/*">-->
               </div>
