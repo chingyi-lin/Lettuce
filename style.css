@@ -55,14 +55,14 @@ header{
 
 main {
     padding-top: 10px;
-    height: 77vh;
+    height: 81vh;
     flex: 1 0 auto;
     background:white;
     overflow:scroll;
 }
 
 footer {
-    height: 15vh;
+    height: 11vh;
 }
 
 .page-footer {
