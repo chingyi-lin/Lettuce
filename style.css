@@ -45,6 +45,10 @@ body {
     background-color: #77A84B !important;
 }
 
+.novhheader{
+    height: 0vh;
+}
+
 header{
     height: 8vh;
 }
