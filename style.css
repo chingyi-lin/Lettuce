@@ -32,10 +32,24 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-  }
+}
+
+.header{
+    background-color:#2e7d32 !important;
+}
+
+.nav {
+    background-color: #2e7d32 !important;
+}
 
 main {
     flex: 1 0 auto;
+    background:white;
+}
+
+.page-footer {
+    background-color: #eceff1 !important;
+    /* background-color: light-green darken-3 !important; */
 }
 
 /* other non-essential CSS */
@@ -45,7 +59,6 @@ main {
   position:relative;
   /* background:red; */
   left:10px;
-  top:300px;
 }
 .btn_wrapper{
   text-align:center;
