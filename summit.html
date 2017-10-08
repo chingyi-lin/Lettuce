@@ -20,8 +20,13 @@
       <script type="text/javascript">
       $(document).ready(function() {
         $("#btnY").click(function() {
-        console.log("yes button clicked")
-         });
+          $("#res").hide();
+          $("#writePost").show();
+        });
+        $('#postBtn').click(function() {
+          window.sessionStorage.setItem("postContent", $("#postContent").val());
+        });
+
         document.getElementById("inputImage").addEventListener('change', handleFileSelect, false);
         $("#image").change(function(){
             alert("file upload changed");
@@ -145,19 +150,7 @@
         }
         var description = "Wow! It looks " + color + "! Did you eat the " + keyword +"?";
         $("#responseTextArea").text(description);
-        //<a class="btn btn-floating red" href="#"><star</i></a>
-
-        var buttonY = document.createElement('a');
-        buttonY.innerHTML = "Yes";
-        buttonY.className = "waves-effect waves-light btn";
-        buttonY.href = "#";
-        buttonY.id = "btnY";
-        var buttonN = document.createElement('a');
-        buttonN.innerHTML = "No";
-        buttonN.className = "waves-effect waves-light btn";
-        buttonN.href = "#";
-        document.getElementById("Yes").appendChild(buttonY);
-        document.getElementById("No").appendChild(buttonN);
+        $("#resBtns").show();
       }
 
       function processImage(f) {
@@ -233,9 +226,24 @@
           <div class="col s12 center-align" id="response">
             <br>
             <img id="sourceImage" width="350" />
-            <p id="responseTextArea" class="blue-text text-darken-2"></p>
-            <div class="col s6" id="Yes"></div>
-            <div class="col s6" id="No"></div>
+            <div id="res">
+              <p id="responseTextArea" class="blue-text text-darken-2"></p>
+              <div id="resBtns" hidden>
+                <div class="col s6" id="Yes">
+                  <a id="btnY" class="waves-effect waves-light btn">Yes</a>
+                </div>
+                <div class="col s6" id="No">
+                  <a class="waves-effect waves-light btn">No</a>
+                </div>
+              </div>
+            </div>
+            <div id="writePost" hidden>
+              <textarea id="postContent"></textarea>
+              <div class="col s12">
+                <a id="postBtn" href="newsfeed.html"
+                  class="waves-effect waves-light btn">Post</a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row center-align" id="uploadArea">
@@ -244,7 +252,7 @@
               <div class="btn">
                 <span>I ATE IT</span>
 
-                <input id="inputImage" name="files[]"" type="file" accept="image/*;capture=camera">
+                <input id="inputImage" name="files[]" type="file" accept="image/*;capture=camera">
                 <!--<input type="file" accept="image/*">-->
               </div>
               <div class="file-path-wrapper">
