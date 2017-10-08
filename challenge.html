@@ -22,7 +22,7 @@
     <body>
       <header>
         <!-- Header start -->
-        <nav>
+        <nav class="navbar">
           <div class="nav-wrapper">
             <a href="#" class="brand-logo center">Challenge</a>
           </div>
@@ -33,13 +33,15 @@
         <!-- Body start -->
         <div class="container">
           <div class="row center-align">
-            <p id="date"></p>
+            
+            
+          
+            <h4>Sunday</h4>
+            <h5 id="date"></h5>
             <script>
               var d = new Date();
               document.getElementById("date").innerHTML = d.toDateString();
             </script>
-          
-            <p>Challenge Information</p>
             
             <!-- Display the countdown timer in an element -->
             <p id="countdown"></p>
