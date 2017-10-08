@@ -1,3 +1,8 @@
+/* clear css*/
+.row {
+    margin-bottom: 0px;
+}
+
 /*
 * multi-line comment
 */
@@ -34,17 +39,25 @@ body {
     flex-direction: column;
 }
 
-.header{
-    background-color:#2e7d32 !important;
-}
 
 .navbar {
     background-color: #77A84B !important;
 }
 
+header{
+    height: 8vh;
+}
+
 main {
+    padding-top: 10px;
+    height: 77vh;
     flex: 1 0 auto;
     background:white;
+    overflow:scroll;
+}
+
+footer {
+    height: 15vh;
 }
 
 .page-footer {
