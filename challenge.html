@@ -24,7 +24,7 @@
         <!-- Header start -->
         <nav class="navbar">
           <div class="nav-wrapper">
-            <a href="#" class="brand-logo center">Challenge</a>
+            <a href="#" class="brand-logo center">Challenges</a>
           </div>
         </nav>
       </header>
@@ -34,65 +34,42 @@
         <div class="container">
           <div class="row center-align">
             
-            
-          
             <h4>Sunday</h4>
             <h5 id="date"></h5>
             <script>
               var d = new Date();
               document.getElementById("date").innerHTML = d.toDateString();
             </script>
-            
-            <!-- Display the countdown timer in an element -->
-            <p id="countdown"></p>
-            <script>
-              // Set the date we're counting down to
-              var countDownDate = new Date("Oct 9, 2017 15:37:25").getTime();
 
-              // Update the count down every 1 second
-              var x = setInterval(function() {
-                // Get todays date and time
-                var now = new Date().getTime();
+            <div class="row valign-wrapper">
+              <div class="col s4">
+                <img src="images/bob.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+              </div>
+              <div class="col s8">
+                <span class="black-text">
+                  <h5>Pick today's challenge:</h5>
+                </span>
+              </div>
+            </div>
 
-                // Find the distance between now an the count down date
-                var distance = countDownDate - now;
-
-                // Time calculations for days, hours, minutes and seconds
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                // Display the result in the element with id="demo"
-                document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-                + minutes + "m " + seconds + "s ";
-
-                // If the count down is finished, write some text 
-                if (distance < 0) {
-                  clearInterval(x);
-                  document.getElementById("countdown").innerHTML = "EXPIRED";
-                }
-              }, 1000);
-            </script>
           </div>
 
-          
           <div class="row">
               <div class="col s12">
                 <!-- Modal Trigger -->
-                <!-- <a class="waves-effect waves-light btn" onclick="openModal1()">no tab highlighted</a> -->
+                <!-- NEED TO FIX THE HYPER LINK HERE! -->
                 <!-- CARD 1 -->
                 <div class="card">
                   <div class="card-content">
-                    <span class="card-title">Challenge 1</span>
-                    <a href="#" onclick="openModal1()">Eat a red fruit or vegatable today!</a>
+                    <span class="card-title"><a href="challenge-on.html">Challenge 1</a></span>
+                    <a href="challenge-on.html">Eat a red fruit or vegatable today!</a>
                   </div>
                 </div>
                 <!-- CARD 2 -->
                 <div class="card">
                   <div class="card-content">
-                    <span class="card-title">Challenge 2</span>
-                    <a href="#" onclick="openModal1()">It's pumpkin season! Eat a winter squash today.</a>
+                    <span class="card-title"><a href="challenge-on.html">Challenge 2</a></span>
+                    <a href="challenge-on.html">It's pumpkin season! Eat a winter squash today.</a>
                   </div>
                 </div>
                 <br><br>
@@ -102,86 +79,6 @@
                 </div>
               </div>
             </div>
-            <div id="modal1" class="modal">
-              <div class="modal-content">
-                <h4>It's on!</h4>
-                <h5>Do you want a challenge a friend?</h5>
-                <div id="modal_content" class="row">
-                </div>
-                <div class="modal-footer">
-                  <a href="challenge-friend.html" class="modal-action modal-close waves-effect waves-green btn-flat">Yes</a>
-                  <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">No</a>
-                </div>
-              </div>
-            <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
-            <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-            <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js'></script>
-            <script >//init the modal
-            $('.modal-trigger').leanModal();
-            
-            function openModal1() {
-              //simulate ajax call to get the modal content
-              var htmlFromServer = getHtml();
-            
-              //append the html to the modal
-              $('#modal_content').html(htmlFromServer);
-              //init the tabs
-              $('ul.tabs').tabs();
-              //open the modal
-              $('#modal1').openModal();
-            };
-            
-            function openModal2() {
-              //simulate ajax call to get the modal content
-              var htmlFromServer = getHtml();
-            
-              //append the html to the modal
-              $('#modal_content').html(htmlFromServer);
-              //init the tabs
-              $('ul.tabs').tabs();
-              //select the first tab
-              $('ul.tabs').tabs('select_tab', 'test1');
-              //open the modal
-              $('#modal1').openModal();
-            };
-            
-            function getHtml() {
-              return;
-            };
-            //# sourceURL=pen.js
-            </script>
-
-            <!---
-            <div class="col s12 m6">
-              <div class="card">
-                <div class="card-content">
-                  <span class="card-title">Challenge 1</span>
-                  <a href="#">Eat a red fruit or vegatable today!</a>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-content">
-                  <span class="card-title">Challenge 2</span>
-                  <a href="#">It's pumpkin season! Eat a winter squash today.</a>
-                </div>
-              </div>
-            </div>
-            <br><br>
-            <div class="col s12 center-align">
-                <a href="#">Skip Today's challenge.</a>
-            </div>
-            -->
-          </div>
-          <!--
-          <div class="container"> 
-            <div class="row center-align btn_wrapper">
-              <a class="waves-effect waves-light btn btn_size"><i class="material-icons left">info</i>Suggestion</a>
-            </div>
-            <div class="row center-align btn_wrapper">
-              <a class="waves-effect waves-light btn btn_size"><i class="material-icons left">add_a_photo</i>Submit</a>
-            </div>
-          </div>
-          -->
       </main>
   
       <footer class="page-footer">
@@ -189,23 +86,23 @@
         <div class="container">
             <div class="row">
               <div class="col s3 center-align">
-                <a class="btn btn-floating red" href="challenge.html"><i class="material-icons center">star</i></a>
-                <p class="grey-text text-lighten-4 center">Challenge</p>
+                <a class="btn btn-floating light-green darken-3" href="challenge.html"><i class="material-icons center">star</i></a>
+                <p class="black-text text-lighten-4 center">Challenge</p>
               </div>
     
               <div class="col s3 center-align">
-                <a class="btn btn-floating red" href="newsfeed.html"><i class="material-icons center">rss_feed</i></a>
-                <p class="grey-text text-lighten-4 center">Newsfeed</p>
+                <a class="btn btn-floating light-green darken-3" href="newsfeed.html"><i class="material-icons center">rss_feed</i></a>
+                <p class="black-text text-lighten-4 center">Newsfeed</p>
               </div>
   
               <div class="col s3 center-align">
-                <a class="btn btn-floating red" href="friend.html"><i class="material-icons center">group</i></a>
-                <p class="grey-text text-lighten-4 center">Friend</p>
+                <a class="btn btn-floating light-green darken-3" href="friend.html"><i class="material-icons center">group</i></a>
+                <p class="black-text text-lighten-4 center">Friend</p>
               </div>
   
               <div class="col s3 center-align">
-                <a class="btn btn-floating red" href="achievement.html"><i class="material-icons center">local_florist</i></a>
-                <p class="grey-text text-lighten-4 center">Achievement</p>
+                <a class="btn btn-floating light-green darken-3" href="achievement.html"><i class="material-icons center">local_florist</i></a>
+                <p class="black-text text-lighten-4 center">Achievement</p>
               </div>
             </div>
         </div>
