@@ -85,7 +85,7 @@
         //alert("uploading");
         //alert(file.size);
         //var file = document.getElementById('inputImage').files[0];
-        var fileName = "sampleUser";
+        var fileName = "image";
         var blobUri = 'https://lettuce.blob.core.windows.net/';
         //var blobService = AzureStorage.createBlobServiceWithSas(blobUri, 'SAS_TOKEN');
         //var blobService = AzureStorage.createBlobServiceAnonymous(blobUri);
@@ -96,7 +96,7 @@
         var customBlockSize = file.size > 1024 * 1024 * 32 ? 1024 * 1024 * 4 : 1024 * 512;
         blobService.singleBlobPutThresholdInBytes = customBlockSize;
         var finishedOrError = false;
-        var speedSummary = blobService.createBlockBlobFromBrowserFile('usrimg', file.name, file, {blockSize : customBlockSize}, function(error, result, response) {
+        var speedSummary = blobService.createBlockBlobFromBrowserFile('usrimg', fileName, file, {blockSize : customBlockSize}, function(error, result, response) {
           finishedOrError = true;
           if (error) {
             // Upload blob failed
