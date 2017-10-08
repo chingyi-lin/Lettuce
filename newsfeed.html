@@ -46,7 +46,7 @@
           </div>
           <img class="responsive-img" src="images/8.png" alt="" width="" height="300">
           <p>Bob completed his challenge!</p>
-          <p>"These strawberries were so good!"</p>
+          <p id="postContent">"These strawberries were so good!"</p>
           <!-- End of 1st person -->
           <!-- 2nd person -->
           <div class="row valign-wrapper">
@@ -91,5 +91,16 @@
           </div>
       </div>
     </footer>
+    <script>
+      $(document).ready(function() {
+        updatePostContent();
+      });
+
+      function updatePostContent() {
+        var content = window.sessionStorage.getItem("postContent");
+        console.log(content);
+        $("#postContent").html('"' + content + '"');
+      }
+    </script>
     </body> 
   </html>
